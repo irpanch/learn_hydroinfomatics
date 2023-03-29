@@ -40,6 +40,15 @@ pine_nfdr %>%
 # 4.3 ---------------------------------------------------------------------
 ## 4.3 problem 3
 
+filter_flashy <- filter(flashy_data,STATE == "ME" | STATE == "NH" | STATE == "VT")
+View(filter_flashy)
+ggplot(filter_flashy,aes(PET,RBI,color=STATE))+
+  geom_line()+
+  theme_classic()
+
+
+# 4.4 ---------------------------------------------------------------------
+
 flashy_data <- read_csv("1_intro_plotting_R/Flashy_Dat_Subset.csv")
 View(flashy_data)
 
