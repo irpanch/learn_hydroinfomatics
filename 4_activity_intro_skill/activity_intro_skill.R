@@ -58,4 +58,20 @@ flashy_data %>%
   ggplot(.,aes(STANAME,SNOW_AVG_BASIN))+geom_bar(stat = "identity")+ 
   theme(axis.text.x = element_text(angle=90))
 
-                     
+                
+
+# 4.5 ---------------------------------------------------------------------
+
+PET_by_STATE <- select(flashy_data,STATE,PET) 
+
+
+summarize_PET <- PET_by_STATE %>% 
+  group_by(STATE) %>% 
+  summarize(mean_PET=mean(PET), max_PET = max(PET), min_PET=min(PET)) 
+  
+
+
+# 4.6  --------------------------------------------------------------------
+
+more_summarize_PET <- mutate(summarize_PET, PET_Range = max_PET - min_PET) %>% 
+  select(STATE,mean_PET,PET_Range)
