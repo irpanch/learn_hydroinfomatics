@@ -98,5 +98,38 @@ PineP <- pineQ %>% ggplot(aes(cfs))+
 
 Ex / PineP
 
+# weigthed average
+## very useful when we face the value is not proportional
+## example: thiessen poligon
 
+precip <- c(4.5, 5.5, 5.8, 4.7, 3.0)
+weight <- c(0.2, 0.15, 0.4, 0.15, 0.1)
 
+mean(precip)
+sum(precip*weight)
+
+# measure of variability
+
+rnorm(300, mean=0, sd=1) %>% as_tibble() %>% 
+  ggplot(aes(value))+
+  stat_density()+
+  xlim(c(-30,30))
+
+# standard deviation
+sd(pineQ$cfs)
+
+# variance
+var(pineQ$cfs)
+
+#coefficient of variation
+sd(pineQ$cfs)/mean(pineQ$cfs)
+
+# IQR using quantile function
+quants <- quantile(pineQ$cfs)
+quants[4] - quants[2]
+
+# normal distribution. mean=median, symetric, single peak.
+## cek normality dengan saphiro test
+
+shapiro.test(pineQ$cfs)
+qqnorm(pineQ$cfs)
