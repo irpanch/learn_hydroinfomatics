@@ -124,6 +124,9 @@ var(pineQ$cfs)
 #coefficient of variation
 sd(pineQ$cfs)/mean(pineQ$cfs)
 
+# IQR using IQR function
+IQR(pineQ$cfs)
+
 # IQR using quantile function
 quants <- quantile(pineQ$cfs)
 quants[4] - quants[2]
@@ -132,4 +135,6 @@ quants[4] - quants[2]
 ## cek normality dengan saphiro test
 
 shapiro.test(pineQ$cfs)
+
+par(mfrow=c(1,1))
 qqnorm(pineQ$cfs)
