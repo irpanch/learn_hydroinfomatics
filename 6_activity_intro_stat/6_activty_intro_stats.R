@@ -35,3 +35,48 @@ flashy_pdf + geom_text(aes(flashy_mean,.025,label=flashy_mean, hjust=-1)) +
   geom_text(aes(flashy_median,.025,label=flashy_median, hjust=-1, vjust=-1)) +
   geom_text(aes(flashy_std_dev,.025,label=flashy_std_dev, hjust=0, vjust=0)) +
   geom_text(aes(flashy_IQR,.025,label=flashy_IQR, hjust=0, vjust=2))
+
+## 6.3 Problem 3
+### perform saphiro-wilk test. is the data normal distribution?
+
+shapiro.test(flashy_data$PPTAVG_BASIN)
+
+### because p-value is larger than 0.05, then the data is in normal dist.
+qqnorm(flashy_data$PPTAVG_BASIN)
+qqline(flashy_data$PPTAVG_BASIN)
+
+
+## 6.4 Problem 4
+### plotting Pine and NFDR data. two pdf in the same plot. log the x axis.
+
+pineMean <- mean(pineQ$cfs)
+pineMedian <- median(pineQ$cfs)
+pineN_mean <- mean(pine_nfdr$cfs)
+pineN_median <- median(pine_nfdr$cfs)
+
+PineP <- pineQ %>% ggplot(aes(cfs))+
+  geom_histogram()+
+  geom_vline(xintercept = pineMean,color="red")+
+  geom_vline(xintercept = pineMedian,color="blue") +
+  scale_x_continuous(trans='log10') +
+  ggtitle("Discharge at PineQ Station") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+PineN <- pine_nfdr %>% ggplot(aes(cfs))+
+  geom_histogram()+
+  geom_vline(xintercept = pineN_mean,color="red")+
+  geom_vline(xintercept = pineN_median,color="blue")+
+  scale_x_continuous(trans='log10')+
+  ggtitle("Discharge at Pine NFDR Station") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+PineP / PineN
+
+## add some mean and median text
+PineP_2 <- PineP + geom_text(aes(pineMean,400,label=pineMean, hjust=-0.2, vjust=0))+
+  geom_text(aes(pineMedian,400,label=pineMedian, hjust=-0.2, vjust=0))
+
+PineN_2 <- PineN + geom_text(aes(pineN_mean,400,label=pineN_mean, hjust=-0.1, vjust=0))+
+  geom_text(aes(pineN_median,400,label=pineN_median, hjust=1, vjust=0))
+
+PineP_2 / PineN_2
